@@ -1,4 +1,3 @@
-import type { Link, Meta } from 'astro-seo'
 import type {
   AvailableLanguage,
   BooleanString,
@@ -9,6 +8,16 @@ import type {
   Theme,
 } from 'giscus'
 import type { LANGUAGES } from '../i18n.ts'
+
+interface SeoLink extends Omit<HTMLLinkElement, 'sizes'> {
+  prefetch: boolean
+  crossorigin: string
+  sizes: string
+}
+
+interface SeoMeta extends HTMLMetaElement {
+  property: string
+}
 
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
@@ -49,8 +58,8 @@ export interface ConfigAppearance {
 
 export interface ConfigSEO {
   twitter: string
-  meta: Partial<Meta>[]
-  link: Partial<Link>[]
+  meta: Partial<SeoMeta>[]
+  link: Partial<SeoLink>[]
 }
 
 export interface ConfigComment {
